@@ -36,8 +36,11 @@ namespace SalesWebMVC
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            //SalesWebMvcContext é o nome da classe dentro da pasta Data
+            //SalesWebMVC é o nome do projeto
             services.AddDbContext<SalesWebMVCContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SalesWebMVCContext")));
+                    options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"), builder =>
+                        builder.MigrationsAssembly("SalesWebMVC")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
