@@ -1,0 +1,25 @@
+﻿using SalesWebMVC.Data;
+using SalesWebMVC.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace SalesWebMVC.Services
+{
+    public class SellerService
+    {
+        private readonly SalesWebMVCContext _context;
+
+        public SellerService(SalesWebMVCContext context)
+        {
+            _context = context;
+        }
+
+        public List<Seller> FindAll()
+        {
+            //Acessa a fonte de dados relacionada a tabela de Sellers e converte isso em uma lista
+            return _context.Seller.ToList();
+        }
+    }
+}
