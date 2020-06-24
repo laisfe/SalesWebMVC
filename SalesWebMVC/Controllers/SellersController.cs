@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SalesWebMVC.Models;
 using SalesWebMVC.Services;
 
 //O controlador recebeu a chamada do localhost/Sellers
@@ -25,6 +26,21 @@ namespace SalesWebMVC.Controllers
             //retorna uma lista de seller
             var list = _sellerService.FindAll();
             return View(list);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Seller seller)
+        {
+            _sellerService.Insert(seller);
+            
+            //Depois da inserção, redireciona a aplicação para a página Index para mostrar novamente a lista de vendedores
+            return RedirectToAction(nameof(Index));
         }
     }
 }
