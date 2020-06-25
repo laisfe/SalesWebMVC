@@ -7,7 +7,8 @@ using SalesWebMVC.Models;
 using SalesWebMVC.Models.ViewModels;
 using SalesWebMVC.Services;
 
-//O controlador recebeu a chamada do localhost/Sellers
+//O controlador recebe a chamada do localhost/Sellers
+//A Index chama o controlador
 namespace SalesWebMVC.Controllers
 {
     public class SellersController : Controller
@@ -46,6 +47,32 @@ namespace SalesWebMVC.Controllers
             _sellerService.Insert(seller);
 
             //Depois da inserção, redireciona a aplicação para a página Index para mostrar novamente a lista de vendedores
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _sellerService.FindById(id.Value);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            //Quando essa view for retornada, o framework buscará por uma tela chamada Delete, o mesmo nome do método
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            _sellerService.Remove(id);
             return RedirectToAction(nameof(Index));
         }
     }
