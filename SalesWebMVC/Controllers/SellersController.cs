@@ -64,7 +64,8 @@ namespace SalesWebMVC.Controllers
                 return NotFound();
             }
 
-            //Quando essa view for retornada, o framework buscará por uma tela chamada Delete, o mesmo nome do método
+            //Quando essa view for retornada, o framework buscará por uma 
+            //tela chamada Delete, o mesmo nome do método
             return View(obj);
         }
 
@@ -74,6 +75,25 @@ namespace SalesWebMVC.Controllers
         {
             _sellerService.Remove(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _sellerService.FindById(id.Value);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            //Quando essa view for retornada, o framework buscará por uma 
+            //tela chamada Delete, o mesmo nome do método
+            return View(obj);
         }
     }
 }
